@@ -2,17 +2,15 @@
 session_start();
 require("../config.php");
 
-$query = "SELECT * FROM `aset`";
+$query = "SELECT * FROM `pinjam`";
 $execute = mysqli_query($link,$query);
-$add = "INSERT INTO aset (IDAset, namaAset) VALUES ('10asdasdas', 'Baju' )";
-$add2 = "INSERT INTO aset (IDAset, namaAset) VALUES ('$_SESSION['tolong']', 'Tolong' )";
 $conn = new mysqli($host, $username, $password, $dbname);
 
-if ($conn -> query($add2) === TRUE) {
+/* if ($conn -> query($add) === TRUE) {
     echo "New record created successfully";
 } else {
-    echo "Error: " . $add2 . "<br>" . $conn->error;
-}
+    echo "Error: " . $add . "<br>" . $conn->error;
+} */
 
 ?>
 
@@ -27,11 +25,42 @@ if ($conn -> query($add2) === TRUE) {
 </head>
 
 <body>
+
+<script>
+  webshim.setOptions('forms-ext', {
+      replaceUI: 'auto',
+      types: 'date',
+      date: {
+          startView: 2,
+          inlinePicker: true,
+          classes: 'hide-inputbtns'
+      }
+  });
+  webshim.setOptions('forms', {
+      lazyCustomMessages: true
+  });
+  //start polyfilling
+  webshim.polyfill('forms forms-ext');
+
+  //only last example using format display
+  $(function () {
+      $('.format-date').each(function () {
+          var $display = $('.date-display', this);
+          $(this).on('change', function (e) {
+              //webshim.format will automatically format date to according to webshim.activeLang or the browsers locale
+              var localizedDate = webshim.format.date($.prop(e.target, 'value'));
+              $display.html(localizedDate);
+          });
+      });
+  });
+</script>
+
 <table>
 	<thread>
 		<tr>
-			<th>IDAset</th>
-			<th>namaAset</th>
+			<th>tanggalPeminjaman</th>
+      <th>tanggalPengembalian</th>
+      <th>namaLembaga</th>
 		</tr>
 	</thread>
 
@@ -40,8 +69,9 @@ if ($conn -> query($add2) === TRUE) {
 			while ($row = mysqli_fetch_array($execute)){
 		?>
 		<tr>
-			<td><?= $row['IDAset'] ?></td>
-			<td><?= $row['namaAset'] ?></td>
+			<td><?= $row['tanggalPeminjaman'] ?></td>
+      <td><?= $row['tanggalPengembalian'] ?></td>
+      <td><?= $row['namaLembaga'] ?></td>
 		</tr>
 		<?php
 		}
@@ -79,19 +109,64 @@ if ($conn -> query($add2) === TRUE) {
     <div class="container">
       <div class="row">
         <div class="mx-auto col-lg-6 col-10">
+
+
           <h1>Form Peminjaman Asset</h1>
           <p class="mb-3">Silahkan isi informasi di bawah ini</p>
-          <form class="text-left" action="/addPelanggan/" method="get">
-            <div class="form-group"> <label for="form16">Nama Asset yang dipinjam</label> <input name="nama" type="text" class="form-control" id="form16"> </div>
+
+          <form class="text-left" method="POST">
+
+            <label for="form17" style="">Tanggal Peminjaman</label>
+            <div class="form-group">
+              <div class="form-group">
+                <input name="peminjaman" type="date" class="form-control"></div>
+            </div>
+
+            <label for="form17" style="">Tanggal Pengembalian</label>
+            <div class="form-group">
+              <div class="form-group">
+                <input name="balik" type="date" class="form-control"></div>
+            </div>
+
             <label for="form17" style="">Nama Lembaga</label>
             <div class="form-group">
-              <div class="form-group"><input name="universitas" type="text" class="form-control" id="form17"></div>
+              <div class="form-group">
+                <input name="universitas" type="text" class="form-control"></div>
             </div>
-            <div class="form-row">
-              <div class="form-group col-md-12" style=""><label for="form19">Tanggal Peminjaman</label> <input name="password" type="password" class="form-control" id="form19"> </div>
-            </div>
-            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#konf_kembali">Submit</button>
+
+            <button type="submit" class="btn btn-primary" name="save">Submit</button>
           </form>
+
+          <?php
+
+            if(isset($_POST['save'])){
+
+                  $sql = "INSERT INTO pinjam (tanggalPeminjaman, tanggalPengembalian, namaLembaga)
+                  VALUES ('".$_POST["peminjaman"]."','".$_POST["balik"]."','".$_POST["universitas"]."')";
+
+                  $result = mysqli_query($conn,$sql);
+            }
+          ?>
+
+          <!--
+          <h1>Test Masukin Aset</h1>
+          <p class="mb-3">Silahkan isi informasi di bawah ini</p>
+
+          <form class="text-left" method="GET$_POST">
+            <div class="form-group">
+              <label for="form16">ID Asset</label>
+              <input name="nama" type="text" class="form-control" id="form16">
+            </div>
+            
+            <label for="form17" style="">Nama Asset</label>
+            <div class="form-group">
+            <div class="form-group">
+            <input name="universitas" type="text" class="form-control" id="form17"></div>
+            </div>
+            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#konf_kembali" name="save">Submit</button>
+          </form>
+          -->
+
         </div>
       </div>
     </div>
