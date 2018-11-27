@@ -116,22 +116,28 @@ $conn = new mysqli($host, $username, $password, $dbname);
 
           <form class="text-left" method="POST">
 
+            <label for="form17" style="">NIM</label>
+            <div class="form-group">
+              <div class="form-group">
+                <input name="nim" type="text" class="form-control" required></div>
+            </div>
+
             <label for="form17" style="">Tanggal Peminjaman</label>
             <div class="form-group">
               <div class="form-group">
-                <input name="peminjaman" type="date" class="form-control"></div>
+                <input name="peminjaman" type="date" class="form-control" required></div>
             </div>
 
             <label for="form17" style="">Tanggal Pengembalian</label>
             <div class="form-group">
               <div class="form-group">
-                <input name="balik" type="date" class="form-control"></div>
+                <input name="balik" type="date" class="form-control" required></div>
             </div>
 
             <label for="form17" style="">Nama Lembaga</label>
             <div class="form-group">
               <div class="form-group">
-                <input name="universitas" type="text" class="form-control"></div>
+                <input name="universitas" type="text" class="form-control" required></div>
             </div>
 
             <button type="submit" class="btn btn-primary" name="save">Submit</button>
@@ -141,8 +147,8 @@ $conn = new mysqli($host, $username, $password, $dbname);
 
             if(isset($_POST['save'])){
 
-                  $sql = "INSERT INTO pinjam (tanggalPeminjaman, tanggalPengembalian, namaLembaga)
-                  VALUES ('".$_POST["peminjaman"]."','".$_POST["balik"]."','".$_POST["universitas"]."')";
+                  $sql = "INSERT INTO pinjam (nim, tanggalPeminjaman, tanggalPengembalian, namaLembaga)
+                  VALUES ('".$_POST["nim"]."','".$_POST["peminjaman"]."','".$_POST["balik"]."','".$_POST["universitas"]."')";
 
                   $result = mysqli_query($conn,$sql);
             }

@@ -1,3 +1,14 @@
+<?php
+session_start();
+require("../config.php");
+
+$query = "SELECT * FROM `pinjam`";
+$execute = mysqli_query($link,$query);
+$conn = new mysqli($host, $username, $password, $dbname);
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -39,24 +50,56 @@
     <div class="container">
       <div class="row">
         <div class="mx-auto col-lg-6 col-10">
-          <h1>Form Perizinan Kegiatan</h1>
-          <p class="mb-3">Silahkan isi informasi di bawah ini</p>
-          <form class="text-left" action="/addPelanggan/" method="get">
 
-            <div class="form-group"> 
-                <label for="form16">Nama Event</label> 
-                <input name="nama" type="text" class="form-control" id="form16"> 
+        <h1>Form Perizinan Event</h1>
+          <p class="mb-3">Silahkan isi informasi di bawah ini</p>
+
+          <form class="text-left" method="POST">
+
+            <label for="form17" style="">Nama Event</label>
+            <div class="form-group">
+              <div class="form-group">
+                <input name="event" type="text" class="form-control" required></div>
             </div>
-                <label for="form17" style="">Nama Lembaga</label>
-                <div class="form-group">
-                <div class="form-group">
-                <input name="universitas" type="text" class="form-control" id="form17">
+
+            <label for="form17" style="">Detail Event</label>
+            <div class="form-group">
+              <div class="form-group">
+                <input name="detail" type="text" class="form-control" required></div>
             </div>
-                <label for="form17">Detail Kegiatan</label> 
-                <input name="ttl" type="text" class="form-control" id="form17">
+
+            <label for="form17" style="">Tanggal Event</label>
+            <div class="form-group">
+              <div class="form-group">
+                <input name="tanggal" type="date" class="form-control" required></div>
             </div>
-            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#konf_kembali">Submit</button>
+
+            <label for="form17" style="">Nama Organisasi Pelaksana</label>
+            <div class="form-group">
+              <div class="form-group">
+                <input name="organisasi" type="text" class="form-control" required></div>
+            </div>
+
+            <label for="form17" style="">Apakah detail acara ini perlu dirahasiakan?</label>
+            <div class="form-group">
+              <div class="form-group">
+                <input name="jenis" type="checkbox" class="form-control" value = "1" checked></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" name="save">Submit</button>
           </form>
+
+          <?php
+
+            if(isset($_POST['save'])){
+
+                  $sql = "INSERT INTO acara (namaEvent, detailEvent, tanggalEvent, organisasi, jenis)
+                  VALUES ('".$_POST["event"]."','".$_POST["detail"]."','".$_POST["tanggal"]."','".$_POST["organisasi"]."','".$_POST["jenis"]."')";
+
+                  $result = mysqli_query($conn,$sql);
+            }
+          ?>
+
         </div>
       </div>
     </div>

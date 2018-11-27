@@ -39,7 +39,7 @@
       <div class="row">
         <div class="col-md-12">
 
-          <form class="">
+          <form class="" method = "POST">
             <div class="form-group"> <label>Email address</label>
               <input type="email" class="form-control" placeholder="Enter email">
               <small class="form-text text-muted">We'll never share your email with anyone else.</small> </div>
@@ -49,6 +49,13 @@
               
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
+
+          <?php
+            $sql = "INSERT INTO pinjam (tanggalPeminjaman, tanggalPengembalian, namaLembaga)
+            VALUES ('".$_POST["peminjaman"]."','".$_POST["balik"]."','".$_POST["universitas"]."')";
+            
+            $result = mysqli_query($conn,$sql);
+          ?>
 
         </div>
       </div>
