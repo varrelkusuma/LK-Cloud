@@ -1,3 +1,13 @@
+<?php
+session_start();
+require("../config.php");
+
+$query = "SELECT * FROM `pinjam`";
+$execute = mysqli_query($link,$query);
+$conn = new mysqli($host, $username, $password, $dbname);
+
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -25,12 +35,11 @@
       </button>
       <div class="collapse navbar-collapse text-center justify-content-center" id="navbar9">
         <ul class="navbar-nav">
-          <li class="nav-item mx-2"> <a class="nav-link" href="home_login.html">Home</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="form_izin_kegiatan.html">Perizinan</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="peminjaman.html">Peminjaman</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="bantuan_dana.html">Bantuan Dana</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="tentang_kami.html">Tentang kami</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="login.html">Logout</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="home_admin.php">Home</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="list_acara.php">List Acara</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="list_aset.php">List Pinjam Aset</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="admin_daftar_acara.php">Konfirmasi Acara</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="admin_daftar_asset.php">Konfirmasi Peminjaman Aset</a> </li>
         </ul>
       </div>
     </div>
@@ -38,21 +47,38 @@
   <div class="py-5">
     <div class="container">
       <div class="row">
-        <div class="mx-auto col-lg-6 col-10">
-          <h1>Form Perizinan Kegiatan</h1>
-          <p class="mb-3">Silahkan isi informasi di bawah ini</p>
-          <form class="text-left" action="/addPelanggan/" method="get">
-            <div class="form-group"> <label for="form16">Nama Event</label> <input name="nama" type="text" class="form-control" id="form16"> </div>
-            <label for="form17" style="">Nama Lembaga</label>
-            <div class="form-group">
-              <div class="form-group"><input name="universitas" type="text" class="form-control" id="form17"></div><label for="form17">Detail Kegiatan</label> <input name="ttl" type="text" class="form-control" id="form17">
-            </div>
-            <div class="form-group"> <label for="form18">Jenis Kegiatan</label> <input name="username" class="form-control" id="form18"> </div>
-            <div class="form-row">
-              <div class="form-group col-md-12" style=""><label for="form19">Tanggal Pelaksanaan Kegiatan</label> <input name="password" type="password" class="form-control" id="form19"> </div>
-            </div>
-            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#konf_kembali">Submit</button>
-          </form>
+        <div class="col-md-12">
+          <div class="table-responsive">
+
+          <table class="table">
+              <thead>
+                <tr>
+                <th>NIM Peminjam</th>
+                <th>ID Aset</th>
+                <th>Tanggal Peminjaman</th>
+                <th>Tanggal Pengembalian</th>
+                <th>Nama Organisasi</th>
+                <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+		    <?php
+			    while ($row = mysqli_fetch_array($execute)){
+		    ?>
+		    <tr>
+            <td><?= $row['nim'] ?></td>
+            <td><?= $row['IDAset'] ?></td>
+            <td><?= $row['tanggalPeminjaman'] ?></td>
+            <td><?= $row['tanggalPengembalian'] ?></td>
+            <td><?= $row['namaLembaga'] ?></td>
+            <td><?= $row['kondisi'] ?></td>
+            <?php
+            }
+            ?>
+	        </tbody>
+            </table>
+
+          </div>
         </div>
       </div>
     </div>

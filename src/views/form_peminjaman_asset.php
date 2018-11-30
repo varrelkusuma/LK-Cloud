@@ -2,7 +2,7 @@
 session_start();
 require("../config.php");
 
-$query = "SELECT * FROM `pinjam`";
+$query = "SELECT * FROM `aset`";
 $execute = mysqli_query($link,$query);
 $conn = new mysqli($host, $username, $password, $dbname);
 
@@ -55,30 +55,6 @@ $conn = new mysqli($host, $username, $password, $dbname);
   });
 </script>
 
-<table>
-	<thread>
-		<tr>
-			<th>tanggalPeminjaman</th>
-      <th>tanggalPengembalian</th>
-      <th>namaLembaga</th>
-		</tr>
-	</thread>
-
-	<tbody>
-		<?php
-			while ($row = mysqli_fetch_array($execute)){
-		?>
-		<tr>
-			<td><?= $row['tanggalPeminjaman'] ?></td>
-      <td><?= $row['tanggalPengembalian'] ?></td>
-      <td><?= $row['namaLembaga'] ?></td>
-		</tr>
-		<?php
-		}
-		?>
-	</tbody>
-
-</table>
   <div class="py-5">
     <div class="container">
       <div class="row">
@@ -95,12 +71,11 @@ $conn = new mysqli($host, $username, $password, $dbname);
       </button>
       <div class="collapse navbar-collapse text-center justify-content-center" id="navbar9">
         <ul class="navbar-nav">
-          <li class="nav-item mx-2"> <a class="nav-link" href="home_login.html">Home</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="form_izin_kegiatan.html">Perizinan</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="peminjaman.html">Peminjaman</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="bantuan_dana.html">Bantuan Dana</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="tentang_kami.html">Tentang kami</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="login.html">Logout</a> </li>
+        <li class="nav-item mx-2"> <a class="nav-link" href="home_pengguna.php">Home</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="peminjaman.php">Peminjaman</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="perizinan.php">Perizinan</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="tentang_kami.php">Tentang kami</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="login.php">Logout</a> </li>
         </ul>
       </div>
     </div>
@@ -121,6 +96,27 @@ $conn = new mysqli($host, $username, $password, $dbname);
               <div class="form-group">
                 <input name="nim" type="text" class="form-control" required></div>
             </div>
+
+            <label for="form17" style="">Nama Barang</label>
+            <div class="form-group">
+              <div class="form-group">
+                <input name="barang" type="text" class="form-control" required></div>
+            </div>
+
+            <?php
+              $cari = "SELECT * FROM 'aset'";
+              $query3 = mysqli_query($link,$query);
+              while ($row = mysqli_fetch_array($query3)){
+                $something = $row['namaAset'];
+                $something2 = $row['IDAset'];
+                if (isset($_POST["barang"])) {
+                  $barang = $_POST['barang'];
+                  if ($something == $barang) {
+                    $kode = $something2;
+                  }
+                }
+              }
+            ?>
 
             <label for="form17" style="">Tanggal Peminjaman</label>
             <div class="form-group">
@@ -147,8 +143,8 @@ $conn = new mysqli($host, $username, $password, $dbname);
 
             if(isset($_POST['save'])){
 
-                  $sql = "INSERT INTO pinjam (nim, tanggalPeminjaman, tanggalPengembalian, namaLembaga)
-                  VALUES ('".$_POST["nim"]."','".$_POST["peminjaman"]."','".$_POST["balik"]."','".$_POST["universitas"]."')";
+                  $sql = "INSERT INTO pinjam (nim, IDAset, tanggalPeminjaman, tanggalPengembalian, namaLembaga)
+                  VALUES ('".$_POST["nim"]."', '".$kode."', '".$_POST["peminjaman"]."','".$_POST["balik"]."','".$_POST["universitas"]."')";
 
                   $result = mysqli_query($conn,$sql);
             }

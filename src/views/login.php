@@ -1,3 +1,5 @@
+<?php include_once('server.php') ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -25,9 +27,9 @@
       </button>
       <div class="collapse navbar-collapse text-center justify-content-center" id="navbar9">
         <ul class="navbar-nav">
-          <li class="nav-item mx-2"> <a class="nav-link" href="home.html">Home</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="tentang_kami.html">Tentang kami</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="login.html">Login</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="home.php">Home</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="tentang_kami.php">Tentang kami</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="login.php">Login</a> </li>
         </ul>
       </div>
     </div>
@@ -39,23 +41,19 @@
       <div class="row">
         <div class="col-md-12">
 
-          <form class="" method = "POST">
+          <form class="" method = "POST" action="login.php">
+            <?php include('errors.php'); ?>
             <div class="form-group"> <label>Email address</label>
-              <input type="email" class="form-control" placeholder="Enter email">
+              <input type="email" class="form-control" name="email" placeholder="Enter email">
               <small class="form-text text-muted">We'll never share your email with anyone else.</small> </div>
             <div class="form-group"> <label>Password</label>
-              <input type="password" class="form-control" placeholder="Password">
+              <input type="password" class="form-control" name="kode" placeholder="Password">
             </div>
               
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary" name="login_user">Submit</button>
           </form>
 
-          <?php
-            $sql = "INSERT INTO pinjam (tanggalPeminjaman, tanggalPengembalian, namaLembaga)
-            VALUES ('".$_POST["peminjaman"]."','".$_POST["balik"]."','".$_POST["universitas"]."')";
-            
-            $result = mysqli_query($conn,$sql);
-          ?>
+         
 
         </div>
       </div>

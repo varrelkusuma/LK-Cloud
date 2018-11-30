@@ -1,3 +1,13 @@
+<?php
+session_start();
+require("../config.php");
+
+$query = "SELECT * FROM `acara`";
+$execute = mysqli_query($link,$query);
+$conn = new mysqli($host, $username, $password, $dbname);
+
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -8,7 +18,8 @@
   <link rel="stylesheet" href="https://static.pingendo.com/bootstrap/bootstrap-4.1.3.css">
 </head>
 
-<body id="login">
+<body>
+
   <div class="py-5">
     <div class="container">
       <div class="row">
@@ -25,37 +36,52 @@
       </button>
       <div class="collapse navbar-collapse text-center justify-content-center" id="navbar9">
         <ul class="navbar-nav">
-          <li class="nav-item mx-2"> <a class="nav-link" href="home.html">Home</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="tentang_kami.html">Tentang kami</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="login.html">Login</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="home_admin.php">Home</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="list_acara.php">List Acara</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="list_aset.php">List Pinjam Aset</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="admin_daftar_acara.php">Konfirmasi Acara</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="admin_daftar_asset.php">Konfirmasi Peminjaman Aset</a> </li>
         </ul>
       </div>
     </div>
   </nav>
-
-
   <div class="py-5">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-
-          <form class="">
-            <div class="form-group"> <label>Email address</label>
-              <input type="email" class="form-control" placeholder="Enter email">
-              <small class="form-text text-muted">We'll never share your email with anyone else.</small> </div>
-            <div class="form-group"> <label>Password</label>
-              <input type="password" class="form-control" placeholder="Password">
-            </div>
-              
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                <th>Nama Acara</th>
+                <th>Detail Acara</th>
+                <th>Tanggal</th>
+                <th>Organisasi</th>
+                <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+		    <?php
+			    while ($row = mysqli_fetch_array($execute)){
+		    ?>
+		    <tr>
+            <td><?= $row['namaEvent'] ?></td>
+            <td><?= $row['detailEvent'] ?></td>
+            <td><?= $row['tanggalEvent'] ?></td>
+            <td><?= $row['organisasi'] ?></td>
+            <td><?= $row['kondisi'] ?></td>
+            </tr>
+            <?php
+            }
+            ?>
+	        </tbody>
+            </table>
+            
+          </div>
         </div>
       </div>
     </div>
   </div>
-
-
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>

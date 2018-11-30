@@ -1,3 +1,14 @@
+<?php
+session_start();
+require("../config.php");
+
+$query = "SELECT * FROM `pinjam`";
+$execute = mysqli_query($link,$query);
+$conn = new mysqli($host, $username, $password, $dbname);
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -25,12 +36,11 @@
       </button>
       <div class="collapse navbar-collapse text-center justify-content-center" id="navbar9">
         <ul class="navbar-nav">
-          <li class="nav-item mx-2"> <a class="nav-link" href="home_login.html">Home</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="form_izin_kegiatan.html">Perizinan</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="peminjaman.html">Peminjaman</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="bantuan_dana.html">Bantuan Dana</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="tentang_kami.html">Tentang kami</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="login.html">Logout</a> </li>
+        <li class="nav-item mx-2"> <a class="nav-link" href="home_pengguna.php">Home</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="peminjaman.php">Peminjaman</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="perizinan.php">Perizinan</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="tentang_kami.php">Tentang kami</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="login.php">Logout</a> </li>
         </ul>
       </div>
     </div>
@@ -39,19 +49,56 @@
     <div class="container">
       <div class="row">
         <div class="mx-auto col-lg-6 col-10">
-          <h1>Form Peminjaman Asset</h1>
+
+        <h1>Form Perizinan Event</h1>
           <p class="mb-3">Silahkan isi informasi di bawah ini</p>
-          <form class="text-left" action="/addPelanggan/" method="get">
-            <div class="form-group"> <label for="form16">Nama Asset yang dipinjam</label> <input name="nama" type="text" class="form-control" id="form16"> </div>
-            <label for="form17" style="">Nama Lembaga</label>
+
+          <form class="text-left" method="POST">
+
+            <label for="form17" style="">Nama Event</label>
             <div class="form-group">
-              <div class="form-group"><input name="universitas" type="text" class="form-control" id="form17"></div>
+              <div class="form-group">
+                <input name="event" type="text" class="form-control" required></div>
             </div>
-            <div class="form-row">
-              <div class="form-group col-md-12" style=""><label for="form19">Tanggal Peminjaman</label> <input name="password" type="password" class="form-control" id="form19"> </div>
+
+            <label for="form17" style="">Detail Event</label>
+            <div class="form-group">
+              <div class="form-group">
+                <input name="detail" type="text" class="form-control" required></div>
             </div>
-            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#konf_kembali">Submit</button>
+
+            <label for="form17" style="">Tanggal Event</label>
+            <div class="form-group">
+              <div class="form-group">
+                <input name="tanggal" type="date" class="form-control" required></div>
+            </div>
+
+            <label for="form17" style="">Nama Organisasi Pelaksana</label>
+            <div class="form-group">
+              <div class="form-group">
+                <input name="organisasi" type="text" class="form-control" required></div>
+            </div>
+
+            <label for="form17" style="">Apakah detail acara ini perlu dirahasiakan?</label>
+            <div class="form-group">
+              <div class="form-group">
+                <input name="jenis" type="checkbox" class="form-control" value = "1" checked></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" name="save">Submit</button>
           </form>
+
+          <?php
+
+            if(isset($_POST['save'])){
+
+                  $sql = "INSERT INTO acara (namaEvent, detailEvent, tanggalEvent, organisasi, jenis)
+                  VALUES ('".$_POST["event"]."','".$_POST["detail"]."','".$_POST["tanggal"]."','".$_POST["organisasi"]."','".$_POST["jenis"]."')";
+
+                  $result = mysqli_query($conn,$sql);
+            }
+          ?>
+
         </div>
       </div>
     </div>

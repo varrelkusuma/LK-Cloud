@@ -6,7 +6,7 @@ $query = "SELECT * FROM `aset`";
 $execute = mysqli_query($link,$query);
 $tolong = "1";
 
-$_SESSION['tolong'] = $tolong;
+$_SESSION["nim"] = "18216020";
 
 ?>
 
@@ -21,29 +21,6 @@ $_SESSION['tolong'] = $tolong;
 </head>
 
 <body>
-<table>
-	<thread>
-		<tr>
-			<th>IDAset</th>
-			<th>namaAset</th>
-		</tr>
-	</thread>
-
-	<tbody>
-		<?php
-			while ($row = mysqli_fetch_array($execute)){
-		?>
-		<tr>
-			<td><?= $row['IDAset'] ?></td>
-			<td><?= $row['namaAset'] ?></td>
-		</tr>
-		<?php
-		}
-		?>
-	</tbody>
-
-</table>
-
 
   <div class="py-5">
     <div class="container">
@@ -61,12 +38,11 @@ $_SESSION['tolong'] = $tolong;
       </button>
       <div class="collapse navbar-collapse text-center justify-content-center" id="navbar9">
         <ul class="navbar-nav">
-          <li class="nav-item mx-2"> <a class="nav-link" href="home_login.html">Home</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="#">Perizinan</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="peminjaman.html">Peminjaman</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="bantuan_dana.html">Bantuan Dana</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="tentang_kami.html">Tentang kami</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="login.html">Logout</a> </li>
+        <li class="nav-item mx-2"> <a class="nav-link" href="home_pengguna.php">Home</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="peminjaman.php">Peminjaman</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="perizinan.php">Perizinan</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="tentang_kami.php">Tentang kami</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="login.php">Logout</a> </li>
         </ul>
       </div>
     </div>

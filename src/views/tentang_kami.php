@@ -25,12 +25,9 @@
       </button>
       <div class="collapse navbar-collapse text-center justify-content-center" id="navbar9">
         <ul class="navbar-nav">
-          <li class="nav-item mx-2"> <a class="nav-link" href="home.html">Home</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="#">Perizinan</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="peminjaman.html">Peminjaman</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="bantuan_dana.html">Bantuan Dana</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="tentang_kami.html">Tentang kami</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="login.html">Logout</a> </li>
+        <li class="nav-item mx-2"> <a class="nav-link" href="home.php">Home</a> </li>
+        <li class="nav-item mx-2"> <a class="nav-link" href="tentang_kami.php">Tentang kami</a> </li>
+        <li class="nav-item mx-2"> <a class="nav-link" href="login.php">Login</a> </li>
         </ul>
       </div>
     </div>
@@ -45,7 +42,7 @@
       <div class="row">
         <div class="col-lg-4 col-md-6 p-4"> <img class="img-fluid d-block mb-3 mx-auto rounded-circle" src="https://static.pingendo.com/img-placeholder-1.svg" alt="Card image cap" width="200">
           <h4> <b>Al Varrel Putra Kusuma</b></h4>
-          <p class="mb-0" style="">18216xxx</p>
+          <p class="mb-0" style="">18216020</p>
         </div>
         <div class="col-lg-4 col-md-6 p-4"> <img class="img-fluid d-block mb-3 mx-auto rounded-circle" src="https://static.pingendo.com/img-placeholder-2.svg" alt="Card image cap" width="200">
           <h4 style=""> <b>Ambar Setia Awan</b></h4>
@@ -53,7 +50,7 @@
         </div>
         <div class="col-lg-4 p-4"> <img class="img-fluid d-block mb-3 mx-auto rounded-circle" src="https://static.pingendo.com/img-placeholder-3.svg" width="200">
           <h4> <b>Adira Syafi Taruna</b></h4>
-          <p class="mb-0">18216xxx</p>
+          <p class="mb-0">18216047</p>
         </div>
       </div>
     </div>

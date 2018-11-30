@@ -8,7 +8,6 @@ $conn = new mysqli($host, $username, $password, $dbname);
 
 ?>
 
-
 <!DOCTYPE html>
 <html>
 
@@ -36,11 +35,11 @@ $conn = new mysqli($host, $username, $password, $dbname);
       </button>
       <div class="collapse navbar-collapse text-center justify-content-center" id="navbar9">
         <ul class="navbar-nav">
-        <li class="nav-item mx-2"> <a class="nav-link" href="home_pengguna.php">Home</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="peminjaman.php">Peminjaman</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="perizinan.php">Perizinan</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="tentang_kami.php">Tentang kami</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="login.php">Logout</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="home_admin.php">Home</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="list_acara.php">List Acara</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="list_aset.php">List Pinjam Aset</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="admin_daftar_acara.php">Konfirmasi Acara</a> </li>
+          <li class="nav-item mx-2"> <a class="nav-link" href="admin_daftar_asset.php">Konfirmasi Peminjaman Aset</a> </li>
         </ul>
       </div>
     </div>
@@ -48,57 +47,60 @@ $conn = new mysqli($host, $username, $password, $dbname);
   <div class="py-5">
     <div class="container">
       <div class="row">
-        <div class="mx-auto col-lg-6 col-10">
-
-        <h1>Form Perizinan Event</h1>
-          <p class="mb-3">Silahkan isi informasi di bawah ini</p>
-
+        <div class="col-md-12">
+          <div class="table-responsive">
           <form class="text-left" method="POST">
+          <table class="table">
+              <thead>
+                <tr>
+                <th>NIM Peminjam</th>
+                <th>ID Aset</th>
+                <th>Tanggal Peminjaman</th>
+                <th>Tanggal Pengembalian</th>
+                <th>Nama Organisasi</th>
+                <th>Terima</th>
+                <th>Tolak</th>
+                </tr>
+              </thead>
+              <tbody>
+		    <?php
+			    while ($row = mysqli_fetch_array($execute)){
+            $terima = "Terima" . $row['IDAset'];
+            $tolak = "Tolak" . $row['IDAset'];
+            $something = $row['IDAset'];
+		    ?>
+		    <tr>
+            <td><?= $row['nim'] ?></td>
+            <td><?= $row['IDAset'] ?></td>
+            <td><?= $row['tanggalPeminjaman'] ?></td>
+            <td><?= $row['tanggalPengembalian'] ?></td>
+            <td><?= $row['namaLembaga'] ?></td>
+            <td> <button id = "yes" class="btn btn-primary" type = "submit" name = "<?php echo $terima?>"> Yes </button> </td>
+            <td> <button id = "no" class="btn btn-primary" type = "submit" name = "<?php echo $tolak?>"> No </button> </td>
+            </tr>
+            <?php
+                
+                
+                if(isset($_POST[$terima])){
+                    
+                    $sql = "UPDATE pinjam SET kondisi = 'OK' WHERE IDAset = '$something'";
+                    $result = mysqli_query($conn,$sql);
+                }
+                
+                if(isset($_POST[$tolak])){
 
-            <label for="form17" style="">Nama Event</label>
-            <div class="form-group">
-              <div class="form-group">
-                <input name="event" type="text" class="form-control" required></div>
-            </div>
+                    $sql = "UPDATE pinjam SET kondisi = 'TOLAK' WHERE IDAset = '$something'";
+                    $result = mysqli_query($conn,$sql);
+                }
 
-            <label for="form17" style="">Detail Event</label>
-            <div class="form-group">
-              <div class="form-group">
-                <input name="detail" type="text" class="form-control" required></div>
-            </div>
-
-            <label for="form17" style="">Tanggal Event</label>
-            <div class="form-group">
-              <div class="form-group">
-                <input name="tanggal" type="date" class="form-control" required></div>
-            </div>
-
-            <label for="form17" style="">Nama Organisasi Pelaksana</label>
-            <div class="form-group">
-              <div class="form-group">
-                <input name="organisasi" type="text" class="form-control" required></div>
-            </div>
-
-            <label for="form17" style="">Apakah detail acara ini perlu dirahasiakan?</label>
-            <div class="form-group">
-              <div class="form-group">
-                <input name="jenis" type="checkbox" class="form-control" value = "1" checked></div>
-            </div>
-
-            <button type="submit" class="btn btn-primary" name="save">Submit</button>
-          </form>
-
-          <?php
-
-            if(isset($_POST['save'])){
-
-                  $sql = "INSERT INTO acara (namaEvent, detailEvent, tanggalEvent, organisasi, jenis)
-                  VALUES ('".$_POST["event"]."','".$_POST["detail"]."','".$_POST["tanggal"]."','".$_POST["organisasi"]."','".$_POST["jenis"]."')";
-
-                  $result = mysqli_query($conn,$sql);
+                
+                
             }
-          ?>
-
+            ?>
+	        </tbody>
+            </table>
+          </form>
+          </div>
         </div>
       </div>
     </div>
